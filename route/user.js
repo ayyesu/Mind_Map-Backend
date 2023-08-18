@@ -12,3 +12,5 @@ router.get('/admin', verifyToken, (req, res) => {
         return res.status(403).json({error: 'Access denied'});
     res.status(200).json({message: 'Welcome Admin'});
 });
+
+module.exports = router;

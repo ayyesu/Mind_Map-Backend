@@ -1,15 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const userRouter = require('./route/user');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/', (req, res) => {
-    res.send('Welcome to MindMap API');
-});
+app.use('/api', userRouter);
 
 const PORT = process.env.PORT || 5000;
 
