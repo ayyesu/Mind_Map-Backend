@@ -13,9 +13,9 @@ const createToken = (_id) => {
 // SignUp
 exports.signup = async (req, res) => {
     try {
-        const {username, email, password} = req.body;
+        const {firstName, lastName, username, email, password} = req.body;
 
-        if (!username || !email || !password) {
+        if (!firstName || !lastName || !username || !email || !password) {
             return res.status(400).json({error: 'Please provide all fields'});
         }
 
@@ -37,6 +37,8 @@ exports.signup = async (req, res) => {
 
         // Create new user
         const newUser = new User({
+            firstName,
+            lastName,
             username,
             email,
             password,
@@ -51,6 +53,8 @@ exports.signup = async (req, res) => {
         const token = createToken(newUser._id);
         res.status(200).json({
             _id: newUser._id,
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
             username: newUser.username,
             email: newUser.email,
             token,
