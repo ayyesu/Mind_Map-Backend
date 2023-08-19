@@ -2,6 +2,14 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../model/Users');
 
+// Create Token
+const createToken = (_id) => {
+    const jwtKey = process.env.JWT_SECRET;
+    return jwt.sign({_id}, jwtKey, {
+        expiresIn: '3d',
+    });
+};
+
 // SignUp
 exports.signup = async (req, res) => {
     try {
@@ -17,20 +25,26 @@ exports.signup = async (req, res) => {
             return res.status(400).json({error: 'User already exists'});
         }
 
-        // Hash password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
         // Create new user
         const newUser = new User({
             username,
             email,
-            password: hashedPassword,
+            password,
         });
 
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        newUser.password = await bcrypt.hash(newUser.password, salt);
+
         // Save user and respond
-        const savedUser = await newUser.save();
-        res.status(200).json(savedUser);
+        await newUser.save();
+        createToken(newUser._id);
+        res.status(200).json({
+            _id: newUser._id,
+            username: newUser.username,
+            email: newUser.email,
+            token,
+        });
     } catch (err) {
         res.status(500).json(err);
     }
@@ -53,9 +67,7 @@ exports.signin = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({error: 'Invalid credentials'});
         }
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
-            expiresIn: '1d',
-        });
+        createToken(user._id);
         res.status(200).json({token, user});
     } catch (err) {
         res.status(500).json(err);
