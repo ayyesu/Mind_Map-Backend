@@ -19,10 +19,20 @@ exports.signup = async (req, res) => {
             return res.status(400).json({error: 'Please provide all fields'});
         }
 
-        // Check if user already exists
-        const user = await User.findOne({email});
-        if (user) {
-            return res.status(400).json({error: 'User already exists'});
+        // Check if user already exists by email
+        const userByEmail = await User.findOne({email});
+        if (userByEmail) {
+            return res
+                .status(400)
+                .json({error: 'User with this email already exists'});
+        }
+
+        // Check if user already exists by username
+        const userByUsername = await User.findOne({username});
+        if (userByUsername) {
+            return res
+                .status(400)
+                .json({error: 'User with this username already exists'});
         }
 
         // Create new user
@@ -38,7 +48,7 @@ exports.signup = async (req, res) => {
 
         // Save user and respond
         await newUser.save();
-        createToken(newUser._id);
+        const token = createToken(newUser._id);
         res.status(200).json({
             _id: newUser._id,
             username: newUser.username,
@@ -61,14 +71,21 @@ exports.signin = async (req, res) => {
     try {
         const user = await User.findOne({email});
         if (!user) {
-            return res.status(400).json({error: 'Invalid credentials'});
+            return res
+                .status(400)
+                .json({error: 'There is no account with this email'});
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({error: 'Invalid credentials'});
+            return res
+                .status(400)
+                .json({error: 'Invalid credentials, provide correct password'});
         }
-        createToken(user._id);
-        res.status(200).json({token, user});
+        const token = createToken(user._id);
+        res.status(200).json({
+            token,
+            user: {_id: user._id, username: user.username, email: user.email},
+        });
     } catch (err) {
         res.status(500).json(err);
     }
