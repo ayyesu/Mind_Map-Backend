@@ -16,7 +16,7 @@ exports.signup = async (req, res) => {
         const {firstName, lastName, username, email, password} = req.body;
 
         if (!firstName || !lastName || !username || !email || !password) {
-            return res.status(400).json({error: 'Please provide all fields'});
+            return res.status(400).json({message: 'Please provide all fields'});
         }
 
         // Check if user already exists by email
@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
         if (userByEmail) {
             return res
                 .status(400)
-                .json({error: 'User with this email already exists'});
+                .json({message: 'User with this email already exists'});
         }
 
         // Check if user already exists by username
@@ -32,7 +32,7 @@ exports.signup = async (req, res) => {
         if (userByUsername) {
             return res
                 .status(400)
-                .json({error: 'User with this username already exists'});
+                .json({message: 'User with this username already exists'});
         }
 
         // Create new user
@@ -71,20 +71,20 @@ exports.signin = async (req, res) => {
     if (!email || !password) {
         return res
             .status(400)
-            .json({error: 'Please provide email and password'});
+            .json({message: 'Please provide email and password'});
     }
     try {
         const user = await User.findOne({email});
         if (!user) {
             return res
                 .status(400)
-                .json({error: 'There is no account with this email'});
+                .json({message: 'There is no account with this email'});
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res
-                .status(400)
-                .json({error: 'Invalid credentials, provide correct password'});
+            return res.status(400).json({
+                message: 'Invalid credentials, provide correct password',
+            });
         }
         const token = createToken(user._id);
         res.status(200).json({
