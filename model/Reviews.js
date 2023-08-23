@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     bookId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book',
