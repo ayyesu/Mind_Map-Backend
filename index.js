@@ -2,13 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const userRouter = require('./route/user');
+const bookRouter = require('./route/book');
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/api', userRouter);
+app.use('/api/user', userRouter);
+app.use('/api/book', bookRouter);
 
 const PORT = process.env.PORT || 5000;
 
