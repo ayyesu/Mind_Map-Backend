@@ -2,7 +2,7 @@ const Books = require('../model/Books');
 const bookSchema = require('../validation/book.validate');
 
 // Get all books
-export const getAllBooks = async (req, res) => {
+exports.getAllBooks = async (req, res) => {
     try {
         const books = await Books.find();
         if (!books) return res.status(404).json({message: 'No books found'});
@@ -13,7 +13,7 @@ export const getAllBooks = async (req, res) => {
 };
 
 // Get all books based on category
-export const getBooksByCategory = async (req, res) => {
+exports.getBooksByCategory = async (req, res) => {
     const category = req.params.category;
     try {
         const books = await Books.find({category});
@@ -28,7 +28,7 @@ export const getBooksByCategory = async (req, res) => {
 };
 
 // Get single book
-export const getSingleBook = async (req, res) => {
+exports.getSingleBook = async (req, res) => {
     const id = req.params.id;
     try {
         const book = await Books.findById(id);
@@ -40,7 +40,7 @@ export const getSingleBook = async (req, res) => {
 };
 
 // Search books
-export const searchBooks = async (req, res) => {
+exports.searchBooks = async (req, res) => {
     const query = req.query.q;
 
     try {
@@ -60,7 +60,7 @@ export const searchBooks = async (req, res) => {
 };
 
 // Add new book
-export const addNewBook = async (req, res) => {
+exports.addNewBook = async (req, res) => {
     const {title, author, description, coverImage, category, price} = req.body;
     const {error} = bookSchema.validate(req.body);
 
@@ -84,7 +84,7 @@ export const addNewBook = async (req, res) => {
 };
 
 // Update book
-export const updateBook = async (req, res) => {
+exports.updateBook = async (req, res) => {
     const {title, author, description, coverImage, category, price} = req.body;
     const {error} = bookSchema.validate(req.body);
 
@@ -107,7 +107,7 @@ export const updateBook = async (req, res) => {
 };
 
 // Delete book
-export const deleteBook = async (req, res) => {
+exports.deleteBook = async (req, res) => {
     try {
         const deletedBook = await Books.findByIdAndRemove(req.params.id);
         res.status(200).json(deletedBook);
