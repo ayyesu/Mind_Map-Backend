@@ -53,12 +53,14 @@ exports.signup = async (req, res) => {
         await newUser.save();
         const token = createToken(newUser._id);
         res.status(200).json({
-            _id: newUser._id,
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            username: newUser.username,
-            email: newUser.email,
             token,
+            user: {
+                _id: newUser._id,
+                firstName: newUser.firstName,
+                lastName: newUser.lastName,
+                username: newUser.username,
+                email: newUser.email,
+            },
         });
     } catch (err) {
         res.status(500).json(err);
@@ -89,7 +91,11 @@ exports.signin = async (req, res) => {
         const token = createToken(user._id);
         res.status(200).json({
             token,
-            user: {_id: user._id, username: user.username, email: user.email},
+            user: {
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+            },
         });
     } catch (err) {
         res.status(500).json(err);
