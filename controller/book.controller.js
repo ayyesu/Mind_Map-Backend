@@ -61,16 +61,16 @@ exports.searchBooks = async (req, res) => {
 
 // Add new book
 exports.addNewBook = async (req, res) => {
-    const {title, author, description, coverImage, category, price} = req.body;
+    const {title, author, description, category, price} = req.body;
+
     const {error} = bookSchema.validate(req.body);
 
-    if (error) return res.status(400).json({error: error.details[0].message});
+    if (error) return res.status(400).json({message: error.details[0].message});
 
     const book = new Books({
         title,
         author,
         description,
-        coverImage,
         category,
         price,
     });
@@ -79,7 +79,7 @@ exports.addNewBook = async (req, res) => {
         const newBook = await book.save();
         res.status(201).json(newBook);
     } catch (error) {
-        res.status(400).json({message: error.message});
+        res.status(400).json({err: error.message});
     }
 };
 
