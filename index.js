@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api/user', userRouter);
-app.use('/api/book', bookRouter);
+app.use('/api/books', bookRouter);
 
 const PORT = process.env.PORT || 5000;
 
