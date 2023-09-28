@@ -8,7 +8,7 @@ exports.getAllBooks = async (req, res) => {
         if (!books) return res.status(404).json({message: 'No books found'});
         res.status(200).json(books);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({error: error.message});
     }
 };
 
@@ -23,7 +23,7 @@ exports.getBooksByCategory = async (req, res) => {
                 .json({message: 'No books found in this category'});
         res.status(200).json(books);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({error: error.message});
     }
 };
 
@@ -35,7 +35,7 @@ exports.getSingleBook = async (req, res) => {
         if (!book) return res.status(404).json({message: 'No book found'});
         res.status(200).json(book);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({error: error.message});
     }
 };
 
@@ -102,7 +102,7 @@ exports.updateBook = async (req, res) => {
         );
         res.status(200).json(updatedBook);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({error: error.message});
     }
 };
 
@@ -112,6 +112,6 @@ exports.deleteBook = async (req, res) => {
         const deletedBook = await Books.findByIdAndRemove(req.params.id);
         res.status(200).json(deletedBook);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({error: error.message});
     }
 };
