@@ -6,7 +6,7 @@ exports.getAllBooks = async (req, res) => {
     try {
         const books = await Books.find()
             .select('title author category description price createdAt')
-            .sort('title');
+            .sort({createdAt: -1});
         if (!books) return res.status(404).json({message: 'No books found'});
         res.status(200).json(books);
     } catch (error) {
