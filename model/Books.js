@@ -21,6 +21,12 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    imageUrl: {
+        type: String,
+    },
+    fileUrl: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
