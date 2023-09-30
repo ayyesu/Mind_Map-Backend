@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const userRouter = require('./route/user');
 const bookRouter = require('./route/book');
+const uploadRouter = require('./route/upload');
 require('dotenv').config();
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(cors());
 
 app.use('/api/user', userRouter);
 app.use('/api/books', bookRouter);
+app.use('/api', uploadRouter);
 
 const PORT = process.env.PORT || 5000;
 
