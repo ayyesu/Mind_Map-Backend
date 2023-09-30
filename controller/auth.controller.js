@@ -60,6 +60,7 @@ exports.signup = async (req, res) => {
                 lastName: newUser.lastName,
                 username: newUser.username,
                 email: newUser.email,
+                role: newUser.role,
             },
         });
     } catch (err) {
@@ -95,6 +96,7 @@ exports.signin = async (req, res) => {
                 _id: user._id,
                 username: user.username,
                 email: user.email,
+                role: user.role,
             },
         });
     } catch (err) {
