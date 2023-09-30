@@ -1,11 +1,16 @@
 const Books = require('../model/Books');
 const bookSchema = require('../validation/book.validate');
+const {giveCurrentDateTime} = require('../util/dateTime');
+const {ref, getDownloadURL, uploadBytesResumable} = 'firebase/storage';
+const {storage} = '../config/FirebaseConfig';
 
 // Get all books
 exports.getAllBooks = async (req, res) => {
     try {
         const books = await Books.find()
-            .select('title author category description price createdAt')
+            .select(
+                'title author category description imageUrl price createdAt',
+            )
             .sort({createdAt: -1});
         if (!books) return res.status(404).json({message: 'No books found'});
         res.status(200).json(books);
@@ -63,21 +68,46 @@ exports.searchBooks = async (req, res) => {
 
 // Add new book
 exports.addNewBook = async (req, res) => {
-    const {title, author, description, category, price} = req.body;
+    const {title, author, description, category, price, imageUrl, fileUrl} =
+        req.body;
 
     const {error} = bookSchema.validate(req.body);
 
     if (error) return res.status(400).json({message: error.details[0].message});
 
-    const book = new Books({
-        title,
-        author,
-        description,
-        category,
-        price,
-    });
-
     try {
+        // const dateTime = giveCurrentDateTime();
+
+        // const imageStorageRef = ref(
+        //     storage,
+        //     `images/${req.file.name + '       ' + dateTime}`,
+        // );
+
+        // const fileStorageRef = ref(
+        //     storage,
+        //     `files/${req.file.name + '       ' + dateTime}`,
+        // );
+
+        // const imageSnapshot = await uploadBytesResumable(
+        //     imageStorageRef,
+        //     req.file.buffer,
+        // );
+
+        // const fileSnapshot = await uploadBytesResumable(
+        //     fileStorageRef,
+        //     req.file.buffer,
+        // );
+
+        const book = new Books({
+            title,
+            author,
+            description,
+            category,
+            imageUrl,
+            fileUrl,
+            price,
+        });
+
         const newBook = await book.save();
         res.status(201).json(newBook);
     } catch (error) {
