@@ -9,7 +9,7 @@ exports.getAllBooks = async (req, res) => {
     try {
         const books = await Books.find()
             .select(
-                'title author category description imageUrl price createdAt',
+                'title author category description imageUrl fileUrl price createdAt',
             )
             .sort({createdAt: -1});
         if (!books) return res.status(404).json({message: 'No books found'});
