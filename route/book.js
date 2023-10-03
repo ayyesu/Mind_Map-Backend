@@ -7,8 +7,6 @@ const {
     addNewBook,
     updateBook,
     deleteBook,
-    uploadCoverImage,
-    upload,
 } = require('../controller/book.controller');
 
 const router = express.Router();
