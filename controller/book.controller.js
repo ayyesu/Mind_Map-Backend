@@ -108,7 +108,7 @@ exports.addNewBook = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const book = new Book({
+    const book = new Books({
       user: userId,
       title,
       author,
@@ -138,7 +138,7 @@ exports.updateBook = async (req, res) => {
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   try {
-    const updatedBook = await Books.findByIdAndUpdate(
+    await Books.findByIdAndUpdate(
       title,
       author,
       description,
