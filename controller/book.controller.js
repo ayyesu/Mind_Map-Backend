@@ -122,7 +122,7 @@ exports.updateBook = async (req, res) => {
       price,
       { new: true }
     );
-    res.status(200).json(updatedBook);
+    res.redirect("/");
   } catch (error) {
     res.status(404).json({ error: error.message });
   }
