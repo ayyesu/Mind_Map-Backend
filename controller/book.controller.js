@@ -1,4 +1,5 @@
 const Books = require("../model/Books");
+const User = require("../model/Users");
 const bookSchema = require("../validation/book.validate");
 
 // Get all books
@@ -13,6 +14,18 @@ exports.getAllBooks = async (req, res) => {
     res.status(200).json(books);
   } catch (error) {
     res.status(404).json({ error: error.message });
+  }
+};
+
+// Get All Books for a particular user
+exports.getAllBooksByUser = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const books = await Books.find({ user: userId });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -80,6 +93,7 @@ exports.searchBooks = async (req, res) => {
 
 // Add new book
 exports.addNewBook = async (req, res) => {
+  const userId = req.params.userId;
   const { title, author, description, category, price, imageUrl, fileUrl } =
     req.body;
 
@@ -88,7 +102,14 @@ exports.addNewBook = async (req, res) => {
   if (error) return res.status(400).json({ message: error.details[0].message });
 
   try {
-    const book = new Books({
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const book = new Book({
+      user: userId,
       title,
       author,
       description,
@@ -99,6 +120,10 @@ exports.addNewBook = async (req, res) => {
     });
 
     const newBook = await book.save();
+
+    user.books.push(newBook);
+    await user.save();
+
     res.status(201).json(newBook);
   } catch (error) {
     res.status(400).json({ err: error.message });
