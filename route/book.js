@@ -17,10 +17,10 @@ router.get("/random-books/:category", getRandomBooksByCategory);
 router.get("/:id", getSingleBook);
 router.get("/:category", getBooksByCategory);
 router.get("/user/:userId", getAllBooksByUser);
+router.post("/:userId/add-book", addNewBook);
 router.get("/search", searchBooks);
 
 router.get("/", getAllBooks);
-router.post("/addbook", addNewBook);
 router.patch("/:id", updateBook);
 router.delete("/:id", deleteBook);
 
