@@ -1,5 +1,6 @@
 const Books = require("../model/Books");
 const User = require("../model/Users");
+const { Readable } = require("stream");
 const bookSchema = require("../validation/book.validate");
 
 // Get all books
@@ -26,6 +27,36 @@ exports.getAllBooksByUser = async (req, res) => {
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getPDF = async (req, res) => {
+  const bookId = req.params.bookId;
+
+  try {
+    const book = await Books.findById(bookId);
+
+    if (!book) {
+      return res.status(404).send("Book not found");
+    }
+
+    const pdfUrl = book.fileUrl; // Assuming `fileUrl` is the field in your book schema
+
+    const response = await fetch(pdfUrl); // Make sure to install the 'node-fetch' package
+    const arrayBuffer = await response.arrayBuffer();
+
+    const buffer = Buffer.from(arrayBuffer);
+
+    const readable = new Readable();
+    readable._read = () => {};
+    readable.push(buffer);
+    readable.push(null);
+
+    res.setHeader("Content-Type", "application/pdf");
+    readable.pipe(res);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };
 

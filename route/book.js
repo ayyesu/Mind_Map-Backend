@@ -9,6 +9,7 @@ const {
   updateBook,
   deleteBook,
   getAllBooksByUser,
+  getPDF,
 } = require("../controller/book.controller");
 
 const router = express.Router();
@@ -18,10 +19,11 @@ router.get("/:id", getSingleBook);
 router.get("/:category", getBooksByCategory);
 router.get("/user/:userId", getAllBooksByUser);
 router.post("/:userId/add-book", addNewBook);
+router.get("/:bookId/pdf", getPDF);
 router.get("/search", searchBooks);
 
 router.get("/", getAllBooks);
 router.patch("/:id", updateBook);
-router.delete("/:id", deleteBook);
+router.delete("/:id/delete", deleteBook);
 
 module.exports = router;
