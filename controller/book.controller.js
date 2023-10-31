@@ -163,24 +163,22 @@ exports.addNewBook = async (req, res) => {
 
 // Update book
 exports.updateBook = async (req, res) => {
-  const { title, author, description, coverImage, category, price } = req.body;
-  const { error } = bookSchema.validate(req.body);
-
-  if (error) return res.status(400).json({ error: error.details[0].message });
-
   try {
-    await Books.findByIdAndUpdate(
-      title,
-      author,
-      description,
-      coverImage,
-      category,
-      price,
-      { new: true }
+    const book = await Books.findById(req.params.bookId);
+
+    if (!book) return res.status(404).send("Book not found...");
+
+    const updatedBook = await Books.findByIdAndUpdate(
+      req.params.bookId,
+      {
+        $set: req.body, // Use the entire request body to update the book
+      },
+      { new: true } // Return the updated document
     );
-    res.redirect("/");
+
+    res.send(updatedBook);
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -188,6 +186,18 @@ exports.updateBook = async (req, res) => {
 exports.deleteBook = async (req, res) => {
   try {
     const deletedBook = await Books.findByIdAndRemove(req.params.id);
+
+    // Find the user associated with the deleted book
+    const user = await User.findOne({ books: req.params.id });
+
+    if (user) {
+      // Remove the book ID from the user's books array
+      user.books = user.books.filter(
+        (bookId) => bookId.toString() !== req.params.id
+      );
+      await user.save();
+    }
+
     res.status(200).json(deletedBook);
   } catch (error) {
     res.status(404).json({ error: error.message });

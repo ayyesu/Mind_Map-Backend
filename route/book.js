@@ -23,7 +23,7 @@ router.get("/:bookId/pdf", getPDF);
 router.get("/search", searchBooks);
 
 router.get("/", getAllBooks);
-router.patch("/:id", updateBook);
+router.patch("/:bookId/update-book", updateBook);
 router.delete("/:id/delete", deleteBook);
 
 module.exports = router;
