@@ -30,7 +30,7 @@ const adminRequest = async (req, res) => {
           res.status(500).json({ error: "Error sending email" });
         } else {
           console.log("Email sent: " + info.response);
-          res.json({ message: "Email sent successfully" });
+          res.json({ message: "Request sent successfully" });
         }
       }
     );
