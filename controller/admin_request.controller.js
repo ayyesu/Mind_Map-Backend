@@ -19,10 +19,18 @@ const adminRequest = async (req, res) => {
     // Send the email
     await transporter.sendMail(
       {
-        from: email,
+        from: req.body.email,
         to: "iamdanielkissiedu@gmail.com",
-        subject: "Request to be an Admin",
-        text: `Name: ${req.body.username}\nEmail: ${req.body.email}\n\n${req.body.message}`,
+        subject: "MindMap E-Library Publisher Request",
+        // text: `Name: ${req.body.username}\nEmail: ${req.body.email}\n\n${req.body.message}`,
+        html: `
+        <div style="background-color: #2196f3; color: #ffffff; padding: 20px;">
+            <h2>MindMap E-Library Publisher Request</h2>
+            <p>Name: ${req.body.username}</p>
+            <p>Email: ${req.body.email}</p>
+            <p>${req.body.message}</p>
+        </div>
+        `,
       },
       (error, info) => {
         if (error) {
