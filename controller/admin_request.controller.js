@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const adminRequest = async (req, res) => {
   const { username, email, message } = req.body;
   if (!username || !email || !message)
-    return res.json({ message: "All field required" });
+    return res.json({ error: "All field required" });
 
   try {
     // Creating a Nodemailer transporter
