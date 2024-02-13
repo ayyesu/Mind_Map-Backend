@@ -7,6 +7,8 @@ const bookSchema = Joi.object({
     category: Joi.string().required(),
     imageUrl: Joi.string(),
     fileUrl: Joi.string(),
+    imageName: Joi.string(),
+    fileName: Joi.string(),
     price: Joi.string(),
     createdAt: Joi.date(),
 });

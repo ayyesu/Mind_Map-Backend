@@ -2,7 +2,7 @@ require('dotenv').config();
 
 // Import the functions you need from the SDKs you need
 const {initializeApp} = require('firebase/app');
-const {getStorage} = require('firebase/storage');
+const {getStorage, ref, deleteObject} = require('firebase/storage');
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,4 +20,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+exports.ref = ref;
+exports.deleteObject = deleteObject;
 exports.storage = getStorage(app);
