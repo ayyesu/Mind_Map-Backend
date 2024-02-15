@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
 const bookSchema = Joi.object({
     title: Joi.string().required(),
@@ -13,4 +13,4 @@ const bookSchema = Joi.object({
     createdAt: Joi.date(),
 });
 
-module.exports = bookSchema;
+export default bookSchema;

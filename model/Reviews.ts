@@ -1,13 +1,14 @@
-const mongoose = require('mongoose');
+import mongoose, {Schema, Model} from 'mongoose';
+import {IReview} from '../interface/model/Review';
 
-const reviewSchema = new mongoose.Schema({
+const reviewSchema: Schema<IReview> = new Schema<IReview>({
     bookId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Book',
         required: true,
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
     },
@@ -25,4 +26,6 @@ const reviewSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Review', reviewSchema);
+const Review: Model<IReview> = mongoose.model<IReview>('Review', reviewSchema);
+
+export default Review;
