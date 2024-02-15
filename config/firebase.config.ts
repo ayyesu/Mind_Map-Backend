@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Define Firebase configuration interface
+// Firebase configuration interface
 interface FirebaseConfig {
     apiKey: string;
     authDomain: string;
