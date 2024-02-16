@@ -115,7 +115,22 @@ MindMap is a Node.js backend library designed for writers to share their books &
   - Description: Delete a specific book by ID.
   - Parameters: `id` (String) - The ID of the book.
 
+  # File Upload Endpoints
+
+  ## Upload File
+  - **Method:** POST
+  - **Endpoint:** /api/file/upload
+  - **Description:** Uploads a file(pdf).
+  - **Request Body:** FormData with a single field named 'file' containing the file to be uploaded.
+  - **Response:** JSON object with information about the uploaded file.
   
+  ## Upload Image
+  - **Method:** POST
+  - **Endpoint:** /api/image/upload
+  - **Description:** Uploads an image.
+  - **Request Body:** FormData with a single field named 'file' containing the image to be uploaded.
+  - **Response:** JSON object with information about the uploaded image.
+
   ## Extras
   Fell free to contribute by sending a pull request... **Thank You!!**
 
