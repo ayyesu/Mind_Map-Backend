@@ -16,7 +16,7 @@ export const joinWaitlist = async (
         });
         if (existingEntry) {
             res.status(400).json({
-                error: 'Already Joined waitlist',
+                message: 'Already Joined waitlist',
             });
             return;
         }
