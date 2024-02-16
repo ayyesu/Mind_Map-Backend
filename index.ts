@@ -5,6 +5,7 @@ import userRouter from './route/user';
 import bookRouter from './route/book';
 import uploadRouter from './route/upload';
 import sendRequest from './route/message';
+import waitlistRouter from './route/waitlist';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use('/api/user', userRouter);
 app.use('/api/books', bookRouter);
 app.use('/api', uploadRouter);
 app.use('/send-request', sendRequest);
+app.use('/api', waitlistRouter);
 
 const PORT: number = parseInt(process.env.PORT || '5000', 10);
 
