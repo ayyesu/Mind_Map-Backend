@@ -73,6 +73,35 @@ MindMap is a Node.js backend library designed for writers to share their books &
   }
   ```
 
+  ## User Endpoints
+
+  ### Signup
+  - **Endpoint:** `POST /api/user/signup`
+  - **Description:** Allows a user to sign up for the application.
+  - **Request Body:** JSON object containing user information.
+  - **Response:** 
+    - Success: Status 200 with a message confirming successful signup.
+    - Error: Status 400 for invalid input or existing user.
+  
+  ### Signin
+  - **Endpoint:** `POST /api/user/signin`
+  - **Description:** Allows a registered user to sign in.
+  - **Request Body:** JSON object containing user credentials (e.g., email and password).
+  - **Response:** 
+    - Success: Status 200 with a JWT token for authentication.
+    - Error: Status 401 for unauthorized access or invalid credentials.
+  
+  ### Admin Access
+  - **Endpoint:** `GET /api/user/admin`
+  - **Description:** Retrieves data for admin users.
+  - **Middleware:** `verifyToken` function to ensure authentication.
+  - **Response:** 
+    - Success: Status 200 with a message welcoming the admin user.
+    - Error: 
+      - Status 403 if user is not authenticated.
+      - Status 403 if user does not have admin role.
+
+
   # Book Endpoints
 
   ### GET /api/books/random-books/:category
