@@ -72,6 +72,49 @@ MindMap is a Node.js backend library designed for writers to share their books &
     "typescript": "^5.3.3"
   }
   ```
+
+  # Book Endpoints
+
+  ### GET /api/books/random-books/:category
+  - Description: Retrieve random books by category.
+  - Parameters: `category` (String) - The category of the books.
+  
+  ### GET /api/books/:id
+  - Description: Retrieve a single book by ID.
+  - Parameters: `id` (String) - The ID of the book.  
+  
+  ### GET /api/books/:category
+  - Description: Retrieve books by category.
+  - Parameters: `category` (String) - The category of the books.
+  
+  ### GET /api/books/user/:userId
+  - Description: Retrieve all books by a specific user.
+  - Parameters: `userId` (String) - The ID of the user.
+  
+  ### POST /api/books/:userId/add-book
+  - Description: Add a new book for a specific user.
+  - Parameters: `userId` (String) - The ID of the user.
+  
+  ### GET /api/books/:bookId/pdf
+  - Description: Retrieve the PDF file of a specific book.
+  - Parameters: `bookId` (String) - The ID of the book.
+  
+  ### GET /api/books/search
+  - Description: Search for books.
+  - Parameters: None.
+  
+  ### GET /api/books/
+  - Description: Retrieve all books.
+  - Parameters: None.
+  
+  ### PATCH /api/books/:bookId/update-book
+  - Description: Update a specific book.
+  - Parameters: `bookId` (String) - The ID of the book.
+  
+  ### DELETE /api/books/:id/delete
+  - Description: Delete a specific book by ID.
+  - Parameters: `id` (String) - The ID of the book.
+
   
   ## Extras
   Fell free to contribute by sending a pull request... **Thank You!!**
