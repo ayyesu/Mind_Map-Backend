@@ -1,6 +1,6 @@
 # MindMap PDF Library Backend
 
-MindMap is a Node.js backend library designed for writers to share their books & also sharing ebooks . Allowing users to access a wide range of pdf content for education, motivation, entertainment e.t.c
+This repository is a Node.js backend system designed for writers to share their books & also sharing ebooks . Allowing users to access a wide range of pdf content for education, motivation, entertainment e.t.c
 
 * npm init -y
 * npm i typescript -D
