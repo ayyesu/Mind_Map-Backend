@@ -225,7 +225,7 @@ export const updateBook = async (
             {
                 $set: req.body, // Use the entire request body to update the book
             },
-            {new: true}, // Return the updated document
+            {new: true},
         );
 
         res.send(updatedBook);
