@@ -9,12 +9,14 @@ import waitlistRouter from './route/waitlist';
 import passwordReset from './route/password-reset';
 import dotenv from 'dotenv';
 import appUrlConfig from './config/appUrl.config';
+import errorHandler from './middleware/errorHandler';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(errorHandler);
 
 app.use('/api/user', userRouter);
 app.use('/api/books', bookRouter);
